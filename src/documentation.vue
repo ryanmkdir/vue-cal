@@ -84,19 +84,25 @@
       | Create an event
     v-chip.pr-1(color="amber darken-1" outline small disabled)
       v-icon.mr-1 timer
+      | Multiple-days events
+    v-chip.pr-1(color="amber darken-1" outline small disabled)
+      v-icon.mr-1 timer
+      | Support more simultaneous events
+    v-chip.pr-1(color="deep-orange" outline small disabled)
+      v-icon.mr-1 access_time
       | Drag events
     v-chip.pr-1(color="deep-orange" outline small disabled)
       v-icon.mr-1 access_time
-      | Multiple-days events
+      | Optional tooltip on events
+    v-chip.pr-1(color="deep-orange" outline small disabled)
+      v-icon.mr-1 access_time
+      | Option to start week on Sunday
     v-chip.pr-1(color="deep-orange" outline small disabled)
       v-icon.mr-1 access_time
       | Resize events snap to time
     v-chip.pr-1(color="deep-orange" outline small disabled)
       v-icon.mr-1 access_time
       | Drag events snap to time
-    v-chip.pr-1(color="deep-orange" outline small disabled)
-      v-icon.mr-1 access_time
-      | Optional tooltip on events
     v-chip.pr-1(color="deep-orange" outline small disabled)
       v-icon.mr-1 access_time
       | Recurring events
@@ -314,6 +320,7 @@
   highlight-message(type="tips").
     if you are not familiar with scoped slots and destructuring slot-scope, first read about it on
     #[a(href="https://vuejs.org/v2/guide/components-slots.html#Scoped-Slots" target="_blank") vuejs.org/v2/guide/components-slots.html #[v-icon(small color="primary") open_in_new]]
+
   sshpre(language="html-vue" label="Vue Template" v-pre).
     &lt;vue-cal xsmall
               :time-from="5 * 60"
@@ -328,6 +335,7 @@
         &lt;span v-else style="font-size: 11px"&gt;{{ minutes }}&lt;/span&gt;
       &lt;/div&gt;
     &lt;/vue-cal&gt;
+
   sshpre.mt-4(language="css" label="CSS").
     .vuecal__time-cell .hours.line:before {border-color: #42b983;}
 
@@ -582,6 +590,50 @@
     By default the delete button only appears at the top of the event with a set height (1.4em).
     If you want a full-height delete button like in this example, you can apply the CSS class #[span.code .vuecal--full-height-delete] to your &lt;vue-cal&gt; tag.
   highlight-message Refer to the #[span.code editableEvents] option in the #[a(href="#api") API] section.
+
+  //- Example.
+  h3.title.mt-5.mb-2.pt-4
+    a(href="#ex--multiple-days-events") # Multiple days events
+    a#ex--multiple-days-events(name="ex--multiple-days-events")
+  v-card.my-2.ma-auto.main-content
+    vue-cal.vuecal--green-theme(selected-date="2018-11-19" :time-from="10 * 60" :time-to="23 * 60" :disable-views="['years', 'year', 'month']" hide-weekends :events="multipleDaysEvents" :no-event-overlaps="!overlapEvents")
+  sshpre(language="html-vue" label="Vue Template" v-pre).
+    &lt;vue-cal selected-date="2018-11-19"
+              :time-from="10 * 60"
+              :time-to="23 * 60"
+              :disable-views="['years', 'year', 'month']"
+              hide-weekends
+              editable-events
+              :events="events"&gt;
+    &lt;/vue-cal&gt;
+
+  sshpre(language="js" label="Javascript").
+    data: () => ({
+      events: [
+        {
+          start: '2018-11-21 14:00',
+          end: '2018-11-21 22:00',
+          title: 'A big thing',
+          content: '&lt;i class="v-icon material-icons"&gt;sentiment_satisfied_alt&lt;/i&gt;',
+          class: 'health'
+        },
+        {
+          start: '2018-11-21 16:00',
+          end: '2018-11-21 19:00',
+          title: 'Another thing',
+          content: '&lt;i class="v-icon material-icons"&gt;thumb_up&lt;/i&gt;',
+          class: 'blue-event'
+        },
+        {
+          start: '2018-11-20 18:30',
+          end: '2018-11-20 20:30',
+          title: 'Crossfit',
+          content: '&lt;i class="v-icon material-icons"&gt;fitness_center&lt;/i&gt;',
+          class: 'sport'
+        },
+        ...
+      ]
+    })
 
   //- Example.
   h3.title.mt-5.mb-2.pt-4
@@ -1444,6 +1496,29 @@ export default {
     ],
     eventsCopy2: [
       ...events
+    ],
+    multipleDaysEvents: [
+      {
+        start: '2018-11-19 08:00',
+        end: '2018-11-20 22:00',
+        title: 'Running Marathon',
+        content: '<i class="v-icon material-icons">directions_run</i>',
+        class: 'sport'
+      },
+      {
+        start: '2018-11-20 13:00',
+        end: '2018-11-20 13:30',
+        title: 'Drink lots of water!',
+        content: '<i class="v-icon material-icons">local_drink</i>',
+        class: 'health'
+      },
+      {
+        start: '2018-11-21 19:00',
+        end: '2018-11-23 11:30',
+        title: 'Trip to India',
+        content: '<i class="v-icon material-icons">flight</i>',
+        class: 'leisure'
+      },
     ],
     splitEvents: [
       ...events,
